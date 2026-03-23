@@ -1,26 +1,37 @@
-public class PalindromeCheckerApp {
-/**
- MAIN CLASS UseCaseiPalindrome App
+import java.util.ArrayDeque;
+import java.util.Deque;
 
- Use Case 1: Application Entry & Welcome Message
+    public class PalindromeCheckerApp {
 
- Description:
- This class represents the entry point of the
- Palindrome Checker Management System.
- At this stage, the application:
- Starts execution from the main() method
- Displays a welcome message
- Shows application version
- No palindrome logic is implemented yet.
- The goal is to establish a clear startup flow.
+        public static void main (String[] args) {
 
- @author DhairaySharma
- @version 1.8
- **/
-    public static void main(String[] args) {
-        System.out.println("Welcome to the Palindrome Checker Management System\n" +
-                "Version: 1.0\n" +
-                "System initialized successfully.");
+            // Define the input string
+            String input = "refer";
 
+            // Create a Deque to store characters
+            Deque<Character> deque = new ArrayDeque<>();
+
+            // Add each character to the deque
+            for (char c : input.toCharArray()) {
+                deque.addLast(c);
+            }
+
+            // Flag to track palindrome result
+            boolean isPalindrome = true;
+
+            // Compare characters from both ends
+            while (deque.size() > 1) {
+                char first = deque.removeFirst();
+                char last = deque.removeLast();
+
+                if (first != last) {
+                    isPalindrome = false;
+                    break;
+                }
+            }
+
+            // Output result
+            System.out.println("Input : " + input);
+            System.out.println("Is Palindrome? : " + isPalindrome);
+        }
     }
-}
