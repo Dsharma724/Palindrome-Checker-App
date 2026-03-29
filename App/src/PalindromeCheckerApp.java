@@ -5,40 +5,28 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
         // Define input
-        String input = "madam";
+        String input = "A man a plan a canal Panama";
 
-        // Convert to lowercase (optional)
-        input = input.toLowerCase();
+        // Normalize string:
+        // 1. Convert to lowercase
+        // 2. Remove all non-alphanumeric characters (spaces, punctuation)
+        String normalized = input.toLowerCase().replaceAll("[^a-z0-9]", "");
 
-        // Call recursive function
-        boolean isPalindrome = check(input, 0, input.length() - 1);
+        // Flag to track palindrome state
+        boolean isPalindrome = true;
+
+        // Compare characters from both ends
+        for (int i = 0; i < normalized.length() / 2; i++) {
+
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
 
         // Output result
         System.out.println("Input : " + input);
+        System.out.println("Normalized : " + normalized);
         System.out.println("Is Palindrome? : " + isPalindrome);
-    }
-
-    /**
-     * Recursively checks whether a string is a palindrome
-     *
-     * @param s     Input string
-     * @param start Starting index
-     * @param end   Ending index
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean check(String s, int start, int end) {
-
-        // Base condition: pointers crossed or same
-        if (start >= end) {
-            return true;
-        }
-
-        // If mismatch found
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call moving inward
-        return check(s, start + 1, end - 1);
     }
 }
