@@ -1,53 +1,53 @@
-import java.util.LinkedList;
+import java.util.Stack;
 
-public class PalindromeCheckerApp {
+public class   PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // Input string
-        String input = "racecar";
+        String input = "level";
 
-        // Create service object
-        PalindromeService service = new PalindromeService();
+        // Choose strategy at runtime
+        PalindromeStrategy strategy = new StackStrategy();
 
-        // Call method
-        boolean isPalindrome = service.checkPalindrome(input);
+        // Execute strategy
+        boolean isPalindrome = strategy.check(input);
 
-        // Output result
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
 
 /**
- * Service class that contains palindrome logic
+ * Strategy Interface
  */
-class PalindromeService {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    /**
-     * Checks whether the input string is a palindrome
-     *
-     * @param input Input string
-     * @return true if palindrome, false otherwise
-     */
-    public boolean checkPalindrome(String input) {
+/**
+ * Stack-based Strategy Implementation
+ */
+class StackStrategy implements PalindromeStrategy {
 
-        // Optional: normalize (lowercase)
+    @Override
+    public boolean check(String input) {
+
+        // Normalize input
         input = input.toLowerCase();
 
-        // Initialize pointers
-        int start = 0;
-        int end = input.length() - 1;
+        // Create stack
+        Stack<Character> stack = new Stack<>();
 
-        // Compare characters moving inward
-        while (start < end) {
+        // Push all characters
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
 
-            if (input.charAt(start) != input.charAt(end)) {
+        // Compare with original string
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-
-            start++;
-            end--;
         }
 
         return true;
