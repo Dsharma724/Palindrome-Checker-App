@@ -1,19 +1,30 @@
 import java.util.Stack;
 
-public class   PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         String input = "level";
 
-        // Choose strategy at runtime
-        PalindromeStrategy strategy = new StackStrategy();
+        // Choose algorithm (you can reuse from UC12)
+        PalindromeStrategy strategy = new TwoPointerStrategy();
 
-        // Execute strategy
+        // Start time
+        long startTime = System.nanoTime();
+
+        // Execute algorithm
         boolean isPalindrome = strategy.check(input);
 
+        // End time
+        long endTime = System.nanoTime();
+
+        // Calculate duration
+        long duration = endTime - startTime;
+
+        // Output results
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + duration + " ns");
     }
 }
 
@@ -25,29 +36,24 @@ interface PalindromeStrategy {
 }
 
 /**
- * Stack-based Strategy Implementation
+ * Two-Pointer Strategy (Fast)
  */
-class StackStrategy implements PalindromeStrategy {
+class TwoPointerStrategy implements PalindromeStrategy {
 
     @Override
     public boolean check(String input) {
 
-        // Normalize input
         input = input.toLowerCase();
 
-        // Create stack
-        Stack<Character> stack = new Stack<>();
+        int start = 0;
+        int end = input.length() - 1;
 
-        // Push all characters
-        for (char c : input.toCharArray()) {
-            stack.push(c);
-        }
-
-        // Compare with original string
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
                 return false;
             }
+            start++;
+            end--;
         }
 
         return true;
