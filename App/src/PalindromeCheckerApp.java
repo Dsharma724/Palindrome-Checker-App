@@ -1,69 +1,38 @@
-import java.util.Queue;
 import java.util.LinkedList;
-import java.util.Stack;
-
-/**
- * ============================================================
- * MAIN CLASS - UseCase6PalindromeCheckerApp
- * ============================================================
- *
- * Use Case 6: Queue + Stack Fairness Check
- *
- * Description:
- * This class demonstrates palindrome validation using
- * two different data structures:
- *
- * - Queue (FIFO - First In First Out)
- * - Stack (LIFO - Last In First Out)
- *
- * Characters are inserted into both structures and then
- * compared by removing from the front of the queue and
- * the top of the stack.
- *
- * If all characters match, the input string is confirmed
- * as a palindrome.
- *
- * @author Developer
- * @version 6.0
- */
 
 public class PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC6.
-     *
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
 
-        // Define the input string to validate
-        String input = "civic";
+        // Define the input string
+        String input = "level";
 
-        // Create a Queue to store characters in FIFO order
-        Queue<Character> queue = new LinkedList<>();
+        // Convert to lowercase (optional for case-insensitive check)
+        input = input.toLowerCase();
 
-        // Create a Stack to store characters in LIFO order
-        Stack<Character> stack = new Stack<>();
+        // Create LinkedList to store characters
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Insert each character into both queue and stack
+        // Add each character to the list
         for (char c : input.toCharArray()) {
-            queue.add(c);     // Enqueue
-            stack.push(c);    // Push
+            list.add(c);
         }
 
-        // Flag to track palindrome status
+        // Flag to track palindrome state
         boolean isPalindrome = true;
 
-        // Compare characters until the queue becomes empty
-        while (!queue.isEmpty()) {
+        // Compare elements from both ends
+        while (list.size() > 1) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
 
-            if (!queue.remove().equals(stack.pop())) {
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Console Output
+        // Output result
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
     }
